@@ -24,17 +24,24 @@ const server = http.createServer((req, res) => {
     })
     req.on('end', () =>{
       res.writeHead(200, {'content-type': 'text/html'});
-      res.write(`
-        <main>
-          <h1>Welcome to Dictionary</h1>
-          <form>
-            <label for='word'>Word</label>
-            <input name='word'>
-          </form>
-          <h2>Defination:</h2>
-          <p>${foundWord[0]}</p>
-        </main>
-      `)
+      res.write(`<main>
+      <h1>Welcome to Dictionary</h1>
+      <form>
+        <label for='word'>Word</label>
+        <input name='word'>
+      </form>
+      </main>`)
+      if (foundWord.length !== 0) {
+        res.write(`
+            <h2>Defination:</h2>
+            <p>${foundWord[0]}</p>
+        `)
+      } else {
+        res.write(`
+            <h2>Defination:</h2>
+            <p>Sorry the word was not found</p>
+        `)
+      }
       res.end()
     })
   })
