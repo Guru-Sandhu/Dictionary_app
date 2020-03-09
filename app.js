@@ -17,10 +17,8 @@ const server = http.createServer((req, res) => {
         foundWord.push(arrOfWords[i]);
       }
     }
-    console.log(foundWord)
     req.on('data', (chunk) =>{
       body += chunk;
-      console.log(body);
     })
     req.on('end', () =>{
       res.writeHead(200, {'content-type': 'text/html'});
@@ -31,12 +29,12 @@ const server = http.createServer((req, res) => {
         <input name='word'>
       </form>
       </main>`)
-      if (foundWord.length !== 0) {
+      if (foundWord.length !== 0 && query.word) {
         res.write(`
             <h2>Defination:</h2>
             <p>${foundWord[0]}</p>
         `)
-      } else {
+      } else if (foundWord.length === 0 && query.word) {
         res.write(`
             <h2>Defination:</h2>
             <p>Sorry the word was not found</p>
